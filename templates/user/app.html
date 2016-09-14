@@ -1,0 +1,239 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Symantec{% endblock %}
+{% block navbar %}
+
+ <script type="text/javascript" src="{{url_for('static',filename='js/jquery-1.10.2.min.js')}}"></script>
+<script src = "{{url_for('static',filename='canvasjs.min.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='sidemenu.css') }}">
+
+
+
+  
+	<div id="page-content-wrapper">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand active" href="#">Home</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="/">Admin</a></li>
+					<li><a href= "#">Search</a></li>
+					<li><div class = "form">
+							
+									<form action = "/" method = post>	
+										{{form.user(placeholder="  Enter user")}}
+									
+										{{form.submit(value="go",class="btn btn-default btn-xs active")}}									
+									</form>
+								</div>
+							</li>
+				</ul>
+			</div>
+		</div>
+{% endblock %}
+{% block content %}
+
+<div id="wrapper" class="active">
+
+		<div id="sidebar-wrapper">
+			<ul id="sidebar_menu" class="sidebar-nav">
+				<li class="sidebar-brand"><a id="menu-toggle" href="#">Symantec<span id="main_icon"></span></a></li>
+			</ul>
+			<ul class="sidebar-nav" id="sidebar">     
+				<li><a>Link1<span ></span></a></li>
+				<li><a>link2<span ></span></a></li>
+			</ul>
+		</div>
+
+<script type="text/javascript">
+	window.onload = function () {
+
+		// dataPoints
+		var dataPoints1 = [];
+
+		var chart = new CanvasJS.Chart("chartContainer",{
+			zoomEnabled: true,
+			
+			title: {
+				text: "Elapsed time for applications"		
+			},
+			toolTip: {
+				shared: true,
+				content:"{x} : {y} sec"
+			},
+			legend: {
+				verticalAlign: "top",
+				horizontalAlign: "center",
+                                fontSize: 14,
+				fontWeight: "bold",
+				fontFamily: "calibri",
+				fontColor: "black"
+			},
+			axisX: {
+				title: "time",
+			},
+			axisY:{
+				title:"elapsed time",
+				includeZero: true,
+				suffix:'s'
+			}, 
+			data: [{ 
+				
+				// dataSeries1			
+				type: "column",
+				xValueType: "dateTime",
+				click:onClick,
+				showInLegend: false,
+				name: "",
+				
+				dataPoints:dataPoints1
+			}],
+          legend:{
+            cursor:"pointer",
+            itemclick : function(e) {
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          }
+		});
+
+		var time;
+		var finish;
+		var elapsed;
+		var yValue1 = 65; 
+		var job;
+		
+		var init = function(){
+
+				// count is number of times loop runs to generate random dataPoints. 
+		
+				
+				
+				time = new Date("{{result[0][5]}}");
+				finish = new Date("{{result[0][4]}}");
+				// add interval duration to time				
+				elapsed = Math.abs(finish-time)/1000;
+				job="{{result[0][0]}}";
+				
+				
+				// pushing the new values
+				dataPoints1.push({
+					x: time.getTime(),
+					y: elapsed,
+					z:job
+				});
+
+
+				
+			
+			
+
+			chart.render();
+
+		
+		};
+		
+		init();
+		function onClick(e){
+			var d =e.dataPoint.z
+
+			window.location.assign("/"+d)
+		}
+		
+		
+		 
+		
+	}	
+
+</script>			
+	
+	
+	
+	
+	
+	  
+		<br><br>
+		<br>
+		<br>
+		<h1> Application: <i> {{result[0][0]}}</i></h1>	
+		
+		<hr>
+		<div class="page-content inset">
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer" style="float:left; height: 300px; width: 90%;">
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			
+			
+			{%set var ={'flag':False}%}
+			{% for t in result %}
+				{%if t[12] == "HIGH"%}
+					{%if var.update({'flag':True})%}
+
+					{%endif%}
+				{%endif%}
+			{%endfor%}
+			
+			
+		<div class = "table">
+			<h3>Application:</h3><br>
+		<table id="example" class="table table-striped table-bordered" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<thead style="background-color:'black';">
+				<tr>
+					<th>#</th>
+					<th>Application ID</th>
+					<th>Severity</th>
+					<th>Name</th>
+					<th>User</th>
+					<th>Queue</th>
+					<th>Start Time</th>
+					<th>Finish Time</th>
+					<th>Elapsed Time</th>
+					<th>State</th>
+					<th>Tracking UI</th>
+				</tr>
+			</thead>
+				
+			<tbody>
+				
+				
+				<tr>
+					<th>1</th>
+					<td><a href="/heuristic/{{result[0][0]}}">{{result[0][0]}}</a></td>
+					<td>
+							{%if var.flag == True%}
+								<font color="red">HIGH</font>
+							{%else%}
+								<font color="green">LOW</font>	
+							{%endif%}
+					</td>
+					<td>{{result[0][1]}}</td>
+					<td>{{result[0][2]}}</td>
+					<td>{{result[0][3]}}</td>
+					<td>{{result[0][4]}}</td>
+					<td>{{result[0][5]}}</td>
+					<td>{{result[0][8]}}</td>
+					<td>{{result[0][6]}}</td>
+					<td><a href = "{{result[0][7]}}" target="_blank">VIEW</a></td>
+				</tr>
+				
+				
+			</tbody>
+		</table>	
+			<u>*Click on Application ID to view heuristics.</u>
+		
+		
+		</div>
+			</div>
+	</div>
+	  
+{% endblock %}

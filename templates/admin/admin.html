@@ -1,10 +1,24 @@
-{% extends "bootstrap/base.html" %}
-{% block title %}Symantec{% endblock %}
+<title>Symantec</title>
 {% block navbar %}
-<script src = "{{url_for('static',filename='canvasjs-1.8.1/canvasjs.min.js')}}"></script>
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='sidemenu.css') }}">
 
+<meta id="my-data" data-name="{{res1}}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
+<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src = "{{url_for('static',filename='js/canvasjs.min.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidemenu.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
+{% block script %}
+<script src="//code.jquery.com/jquery-1.12.3.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script type="text/javascript" src = "{{url_for('static',filename='js/admin.js')}}">
+
+</script>
+{% endblock %}
 
 	<div id="page-content-wrapper">
 		<div class="navbar navbar-inverse navbar-fixed-top">
@@ -42,129 +56,7 @@
 		</div>
 	
 	
-<script type="text/javascript">
-	window.onload = function () {
 
-		// dataPoints
-		var dataPoints1 = [];
-		var apps = [];
-
-		var chart = new CanvasJS.Chart("chartContainer",{
-			zoomEnabled: true,
-			title: {
-				text: "Cluster usage"		
-			},
-			toolTip: {
-				shared: true,
-				content: "Cluster usage on <strong>{x}</strong> is <strong>{y}</strong> %",
-			},
-			legend: {
-				verticalAlign: "top",
-				horizontalAlign: "center",
-                                fontSize: 14,
-				fontWeight: "bold",
-				fontFamily: "calibri",
-				fontColor: "black"
-			},
-			axisX: {
-				title: "time",
-				valueFormatString: "YYYY-MMM-DD HH:mm"
-			},
-			axisY:{
-				interval:20,
-				maximum:100,
-				title:"percentage",
-				suffix: '%',
-				includeZero: true
-			}, 
-			data: [{ 
-				// dataSeries1
-				color: "#379EAD",
-				type: "column",
-				xValueType: "dateTime",
-				click:onClick,
-				showInLegend: true,
-				name: "cluster",
-				dataPoints: dataPoints1
-			}],
-          legend:{
-            cursor:"pointer",
-            itemclick : function(e) {
-              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                e.dataSeries.visible = false;
-              }
-              else {
-                e.dataSeries.visible = true;
-              }
-              chart.render();
-            }
-          }
-		});
-
-
-
-		var updateInterval = 300000;
-		// initial value
-		var yValue1 = 65; 
-		
-		var time;
-		var app;
-		
-		// starting at 9.30 am
-
-		var updateChart = function (count) {
-				// count is number of times loop runs to generate random dataPoints. 
-		
-			{%for t in res1%}
-				
-				time = new Date("{{t[5]}}");
-				// add interval duration to time				
-				
-
-
-				// generating random values
-				var deltaY1 = .5 + Math.random() *(-.5-.5);
-				
-
-				// adding random value and rounding it to two digits. 
-				yValue1 = Math.round((yValue1 + deltaY1)*100)/100;
-				app = "{{t[0]}}"
-
-				
-				// pushing the new values
-				dataPoints1.push({
-					x: time.getTime(),
-					y: yValue1,
-					z: app
-				});
-
-
-			{%endfor%}
-
-			// updating legend text with  updated with y Value 
-			chart.options.data[0].legendText = " cluster " + yValue1 + "%";
-			
-
-			chart.render();
-
-		};
-		
-		
-
-		// generates first set of dataPoints 
-		updateChart(3000);	
-		 
-		// update chart after specified interval 
-		setInterval(function(){updateChart()}, updateInterval);
-		
-		function onClick(e){
-			var d =e.dataPoint.x/1000;
-
-			window.location.assign("/admin/"+d)
-		}
-	}	
-
-	</script>	
 		<br><br>
 		<br>
 		<br>
@@ -174,24 +66,28 @@
         <div class="page-content inset">
 			<div class="row">
 				<div class="col-md-12">
-					<div align ="right" id="chartContainer" style="float:left; height: 300px; width: 90%;">
+					<div align ="right" id="container" style="float:left; height: 400px; width: 100%;">
+					
 					</div>              
 				</div>
+				
 			</div>
 			<br>
 			<br>
 			<hr>
 		<div class = "table"> 
+		
 		<h3> Recent applications: {% set var = [] %}</h3><br>
 		
-		<table id="example" class="table table-striped table-bordered" width="100%" border="0" cellspacing="0" cellpadding="0" style="overflow-x:auto;">
-			<thead style="background-color:'black';">
+		<table id="example" class="display" cellspacing="0" width="100%">
+			<thead>
 				<tr>
 					<th>#</th>
 					<th>Application ID</th>
 					<th>Severity</th>
 					<th>Name</th>
 					<th>User</th>
+					<th>Type</th>
 					<th>Queue</th>
 					<th>Start Time</th>
 					<th>Finish Time</th>
@@ -230,10 +126,11 @@
 					<td>{{job[2]}}</td>
 					<td>{{job[3]}}</td>
 					<td>{{job[4]}}</td>
-					<td>{{job[5]}}</td>
-					<td>{{job[8]}}</td>
-					<td>{{job[6]}}</td>
-					<td><a href = "{{job[7]}}" target="_blank">VIEW</a></td>
+					<td>{{job[5]|ctime()}}</td>
+					<td>{{job[6]|ctime()}}</td>
+					<td>{{job[9]}}</td>
+					<td>{{job[7]}}</td>
+					<td><a href = "{{job[8]}}" target="_blank">VIEW</a></td>
 				</tr>
 				
 				{%endfor%}
@@ -241,9 +138,10 @@
 		</table>
 		
 
-		<u>*Click on Application ID to view details.</u>
 	</div>
 			
 </div>
 </div>
+
 {% endblock %}
+

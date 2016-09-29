@@ -1,24 +1,26 @@
 {% block navbar %}
-<meta id="my-data" data-name="{{rv}}">
+<meta id="my-data" data-name="{{res1}}" data-min="{{min}}" data-max="{{max}}">
+<!-- jQuery library -->
 <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
 <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
 <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
 <script src = "{{url_for('static',filename='js/canvasjs.min.js')}}"></script>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidemenu.css') }}">
 <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
 {% block script %}
+<script src="//code.jquery.com/jquery-1.12.3.js"></script>
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script src="http://code.highcharts.com/stock/4.2.2/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/user.js')}}">
-</script>
-			
-{%endblock%} 
+<script type="text/javascript" src="{{url_for('static',filename='js/admin_chart.js')}}"></script>
+{% endblock %}
+
 	<div id="page-content-wrapper">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand active" href="#">Home</a>
+					<a class="navbar-brand active" href="/">Home</a>
 				</div>
 				<ul class="nav navbar-nav">
 					<li><a href="/">Admin</a></li>
@@ -32,7 +34,6 @@
 									</form>
 								</div>
 							</li>
-					
 				</ul>
 			</div>
 		</div>
@@ -49,32 +50,39 @@
 				<li><a>link2<span ></span></a></li>
 			</ul>
 		</div>
-		
-  
+	
+	
+
 		<br><br>
 		<br>
 		<br>
-		<h1> User Dashboard:<i> {{name}} </i></h1>	
+		<h1> Admin Dashboard </h1>
 		<hr>
-		<div class="page-content inset">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
 			<div class="row">
 				<div class="col-md-12">
-					<div align ="right" id="chartContainer" style="float:left; height: 300px; width: 90%;">
+					<div align ="right" id="container" style="float:left; height: 400px; width: 100%;">
+					
 					</div>              
 				</div>
+				
 			</div>
 			<br>
+			<br>
 			<hr>
-			
-		<div class = "table">
-			<h3>Applications:</h3><br>
-		<table id="example" class="display" cellspacing="0" width="100%">
-			<thead>
+		<div class = "table"> 
+		
+		<h3> Applications: </h3><br>
+		{% set var = [] %}
+		<table id="example" class="display" width="100%" border="0" cellspacing="0" cellpadding="0" >
+			<thead >
 				<tr>
 					<th>#</th>
 					<th>Application ID</th>
 					<th>Severity</th>
 					<th>Name</th>
+					<th>User</th>
 					<th>Type</th>
 					<th>Queue</th>
 					<th>Start Time</th>
@@ -86,9 +94,8 @@
 			</thead>
 				
 			<tbody>
-				{% set var = [] %}
 				{% set var1 = {'flag':'LOW'} %}
-				{%for job in rv %}
+				{%for job in res %}
 					{% for value in list.values()%}
 						{%for v in value%}
 							{% if v[0] == job[0] and v[3]=="HIGH"%}
@@ -100,6 +107,8 @@
 							{%endif%}
 						{%endfor%}
 					{%endfor%}
+				
+				
 				<tr>
 					<th>{{loop.index }}</th>
 					<td><a href="/{{job[0]}}">{{job[0]}}</a></td>
@@ -110,6 +119,7 @@
 						{%endif%}	
 					</td>
 					<td>{{job[1]}}</td>
+					<td>{{job[2]}}</td>
 					<td>{{job[3]}}</td>
 					<td>{{job[4]}}</td>
 					<td>{{job[5]|ctime()}}</td>
@@ -121,11 +131,14 @@
 				
 				{%endfor%}
 			</tbody>
-		</table>	
+		</table>
 		
-		
-		</div>
+
+		<u>*Click on Application ID to view details.</u>
 	</div>
-	</div>
-	  
+			
+</div>
+</div>
+
 {% endblock %}
+

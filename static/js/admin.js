@@ -1,5 +1,4 @@
 var chart;
-var data = [];
 $(function () {Highcharts.setOptions({
 			global: {
 				useUTC: false
@@ -16,11 +15,11 @@ $(function () {Highcharts.setOptions({
 			},
 
             rangeSelector: {
-				selected:0,
 				inputPosition:{
 					x:-40,
 				},
                 inputEnabled: true,
+                selected: 0,
 				inputDateFormat: '%d-%b-%Y %H:%M:%S',
 				inputEditDateFormat: '%m-%d,%Y %H:%M:%S',
 				inputBoxWidth: 140,
@@ -53,15 +52,13 @@ $(function () {Highcharts.setOptions({
                     text: 'All'
                 }]
             },
-			
+			buttonSpacing: 100,
 			navigator: {
-				height: 30,
-				adaptToUpdatedData: false,
-				
+				height: 30
 			},
 
             title: {
-                text: '<strong>Cluster Usage </strong>' 
+                text: '<strong>Cluster Usage</strong>'
             },
 			
 			yAxis: {
@@ -105,7 +102,8 @@ $(function () {Highcharts.setOptions({
                         var min = $('.highcharts-range-selector[name=min]').val();
 						var max = $('.highcharts-range-selector[name=max]').val();
 						min = new Date(min).getTime();
-						max = new Date(max).getTime()
+						max = new Date(max).getTime();
+						
 						//console.log(new Date(min).getTime(),new Date(max).getTime());
 						$.ajax({
 							type: 'POST',
@@ -124,7 +122,6 @@ $(function () {Highcharts.setOptions({
             series: [{
                 name: 'cluster usage',
                 data: (function(){
-					
 					var data = [];
 					var res1 = $('#my-data').data();
 					//console.log(res1);
@@ -147,14 +144,9 @@ $(function () {Highcharts.setOptions({
 					return data;
 				}())
             }]
-		},function(chart){
-			var min = $('#my-data').data().min;
-			var max = $('#my-data').data().max;
-			//console.log(min);	
-			chart.xAxis[0].setExtremes(min, max); 
 		});
     });
-
+	
 $(document).ready(function() {
     var t= $('#example').DataTable( {
         "pagingType": "full_numbers",
@@ -163,7 +155,7 @@ $(document).ready(function() {
             "orderable": false,
             "targets": 0
         } ],
-        "order": [[ 0, 'desc' ]]
+        "order": [[ 1, 'desc' ]]
     } );	
 	
 	 t.on( 'order.dt search.dt', function () {
@@ -172,4 +164,5 @@ $(document).ready(function() {
         } );
     } ).draw();
 } );
+	
 		

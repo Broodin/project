@@ -29,4 +29,3 @@ class SearchForm(Form):
 
 from .admin import *
 from .user import *
-from .heuristic import *

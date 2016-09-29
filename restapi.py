@@ -11,6 +11,8 @@ api = Api(api_rest)
 #json_data = { 'id' : '', 'name' : '','user' : '', 'queue': '', 'start_time':'' , 'finish_time' : '', 'state': '','url':'', 'elapsed_time':''}
 parser = reqparse.RequestParser()
 
+
+
 def app_parser():
 	
 	parser.add_argument('id')
@@ -84,6 +86,7 @@ class Application(Resource):
 		#conn.commit()
 		return jsonify(id,name,user,queue,start_time,finish_time,state,url,elapsed_time)
 
+
 		
 '''class Cluster(Resource):
 	def get(self):
@@ -107,4 +110,5 @@ class Application(Resource):
 		
 api.add_resource(Application, '/app/application/post')
 api.add_resource(Heuristic, '/app/heuristic/post')
+#api.add_resource(Admin,'/url')
 #api.add_resource(Cluster, '/app/cluster/post')

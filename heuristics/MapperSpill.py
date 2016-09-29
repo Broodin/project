@@ -33,5 +33,5 @@ def MapperSpill(i):
 		severity = "HIGH"
 		score=ratio
 	
-	#insert(i,score,severity,"MapperSpill")
+	insert(i,score,severity,"MapperSpill")
 	print (severity,score,i[0],"MapperSpill")

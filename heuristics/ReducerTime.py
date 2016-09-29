@@ -18,5 +18,5 @@ def ReducerTime(i):
 		severity = "HIGH"
 		score=redtime_value
 	
-	#insert(i,score,severity,"ReducerTime")
+	insert(i,score,severity,"ReducerTime")
 	print (severity,score,i[0],"ReducerTime")

@@ -22,5 +22,5 @@ def MapperGC(i):
 	else:
 		severity = "HIGH"
 		score=gc_cpu_ratio
-	#insert(i,score,severity,"MapperGC")
+	insert(i,score,severity,"MapperGC")
 	print (severity,score,i[0],"MapperGC")

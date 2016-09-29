@@ -18,5 +18,5 @@ def ReducerDataSkew(i):
 	else:
 		severity = "HIGH"
 		score=redskew_value
-	#insert(i,score,severity,"ReducerDataSkew")
+	insert(i,score,severity,"ReducerDataSkew")
 	print (severity,score,i[0],"ReducerDataSkew")

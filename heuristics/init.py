@@ -2,7 +2,7 @@ import sqlalchemy
 from sqlalchemy import *
 	
  
-engine = sqlalchemy.create_engine('mysql+pymysql://root:symantec@localhost:3306')
+engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306')
 engine.execute("USE dbname")
 metadata = MetaData(bind=engine)
 

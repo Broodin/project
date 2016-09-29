@@ -38,6 +38,6 @@ def MapperSpeed(i):
 	else:
 		severity = "HIGH"
 		score=ratio
-	#insert(i,score,severity,"MapperSpeed")
+	insert(i,score,severity,"MapperSpeed")
 	print (severity,score,i[0],"MapperSpeed",ratio_thres,ratio)
 	

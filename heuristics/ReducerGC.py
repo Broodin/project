@@ -34,5 +34,5 @@ def ReducerGC(i):
 	else:
 		severity = "HIGH"
 		score=gc_cpu_ratio
-	#insert(i,score,severity,"ReducerGC")	
+	insert(i,score,severity,"ReducerGC")	
 	print (severity,score,i[0],"ReducerGC")

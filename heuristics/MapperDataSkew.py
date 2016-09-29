@@ -18,5 +18,5 @@ def MapperDataSkew(i):
 		severity = "HIGH"
 		score=mapskew_value
 	
-	#insert(i,score,severity,"MapperDataSkew")
+	insert(i,score,severity,"MapperDataSkew")
 	print (severity,score,i[0],mapskew_threshold,mapskew_value,"MapperDataSkew")

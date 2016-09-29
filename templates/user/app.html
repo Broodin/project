@@ -7,16 +7,7 @@
 <script src = "{{url_for('static',filename='js/canvasjs.min.js')}}"></script>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidemenu.css') }}">
 <script type="text/javascript" src = "{{url_for('static',filename='js/heuristic/app.js')}}"></script>	
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/mapdataskew.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/mapgc.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/MapperMemory.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/MapperSpeed.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/MapperSpill.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/MapperTime.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/ReducerDataSkew.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/ReducerGC.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/ReducerMemory.js')}}"></script>
-<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/ReducerTime.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/heuristic.js')}}"></script>
 
 
   
@@ -165,7 +156,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer2" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Mapper Data Skew",$('#my-data').data().mapskew,"hdfs bytes read","chartContainer2");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -174,6 +166,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer1" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper GC",$('#my-data').data().mapgc,"GC/CPU","chartContainer1");
+					</script>
 					
 					</div>              
 				</div>
@@ -183,7 +177,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer3" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Mapper Memory",$('#my-data').data().mapmemory,"Physical memory","chartContainer3");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -192,7 +187,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer4" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Mapper Speed",$('#my-data').data().mapspeed,"Bytes read/Time","chartContainer4");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -201,7 +197,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer5" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Mapper Spill",$('#my-data').data().mapspill,"Spilled records","chartContainer5");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -210,7 +207,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer6" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Mapper Time",$('#my-data').data().maptime,"average map time","chartContainer6");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -219,7 +217,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer7" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Reducer Data Skew",$('#my-data').data().reducerdataskew,"Shuffled bytes","chartContainer7");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -228,7 +227,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer8" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Reducer Memory",$('#my-data').data().reducermemory,"physical memory","chartContainer8");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -237,7 +237,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer9" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Reducer GC",$('#my-data').data().reducergc,"GC/CPU","chartContainer9");
+					</script>
 					</div>              
 				</div>
 			</div>
@@ -246,7 +247,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div align ="right" id="chartContainer10" style="float:left; height: 300px; width: 90%;">
-					
+					<script>heuristic("Reducer Time",$('#my-data').data().reducertime,"average reducer time","chartContainer10");
+					</script>
 					</div>              
 				</div>
 			</div>

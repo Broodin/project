@@ -17,5 +17,5 @@ def MapperTime(i):
 		severity = "HIGH"
 		score=maptime_value
 	
-	#insert(i,score,severity,"MapperTime")
+	insert(i,score,severity,"MapperTime")
 	print (severity,score,i[0],"MapperTime")

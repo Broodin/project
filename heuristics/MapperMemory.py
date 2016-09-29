@@ -19,6 +19,6 @@ def MapperMemory(i):
 	else:
 		severity = "HIGH"
 		score=ratio
-	#insert(i,score,severity,"MapperMemory")
+	insert(i,score,severity,"MapperMemory")
 		
 	print (severity,score,i[0],"MapperMemory")

@@ -19,5 +19,5 @@ def ReducerMemory(i):
 	else:
 		severity = "HIGH"
 		score=ratio
-	#insert(i,score,severity,"ReducerMemory")	
+	insert(i,score,severity,"ReducerMemory")	
 	print (severity,score,i[0],"ReducerMemory")

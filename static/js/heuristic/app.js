@@ -26,6 +26,12 @@ $(window).on('load', function() {
 				valueFormatString: "YYYY-MMM-DD HH:mm"				
 			},
 			axisY:{
+				stripLines: [
+				{
+					value : null,
+					label: "Average: "
+				}
+				],
 				title:"elapsed time",
 				includeZero: true,
 				suffix:'s'
@@ -100,7 +106,14 @@ $(window).on('load', function() {
 
 				
 				}
-			
+				var sum = 0;
+				var length = chart.options.data[0].dataPoints.length;
+				for( var i = 0; i < length; i++ )
+					sum += chart.options.data[0].dataPoints[i].y;
+				average = sum / length;
+				console.log(chart.options.axisY);
+
+				chart.options.axisY.stripLines[0].value = average;
 
 			chart.render();
 

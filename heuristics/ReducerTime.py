@@ -5,10 +5,10 @@ def ReducerTime(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,reduce_threshold)
 	val = getattr(heuristic,reduce_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
-	redtime_threshold = thresh_val(i,"REDUCER_TIME")
-	redtime_value = val(i,"REDUCER_TIME")
+	redtime_threshold = float(thresh_val(i,"REDUCER_TIME"))
+	redtime_value = redtime(i)
 	
 	percent = 0.02*redtime_threshold
 	if  redtime_threshold - percent <= redtime_value <= redtime_threshold + percent:
@@ -20,3 +20,13 @@ def ReducerTime(i):
 	
 	insert(i,score,severity,"ReducerTime")
 	print (severity,score,i[0],"ReducerTime")
+
+def redtime(i):
+	stmt = select([func.avg(task.c.FINISH_TIME-task.c.START_TIME)]).where(and_(task.c.JOB_ID==i[0],taskcounter.c.TASK_ID == task.c.TASK_ID, task.c.TYPE=="REDUCE"))
+	cur=stmt.execute()
+	result = cur.fetchone()
+	if result[0] is not None:
+		return result[0]
+	else:
+		return 0
+

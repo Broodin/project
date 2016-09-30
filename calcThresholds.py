@@ -1,15 +1,15 @@
 from sqlalchemy import *
 import sqlalchemy
 
-engine = sqlalchemy.create_engine('mysql+pymysql://root:symantec@localhost:3306',echo=True)
+engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306',echo=True)
 engine.execute("USE dbname")
 metadata = MetaData(bind=engine)
 
 
-application = Table('APPLICATION_CHECKED', metadata, autoload=True)
-taskcounter = Table('TASKCOUNTER',metadata,autoload=True)
-task = Table('TASK',metadata,autoload=True)
-threshold = Table('THRESHOLD',metadata,autoload=True)
+application = Table('application', metadata, autoload=True)
+taskcounter = Table('taskcounter',metadata,autoload=True)
+task = Table('task',metadata,autoload=True)
+threshold = Table('threshold',metadata,autoload=True)
 
 delete = threshold.delete()
 delete.execute()

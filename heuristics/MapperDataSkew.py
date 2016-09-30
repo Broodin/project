@@ -5,7 +5,7 @@ def MapperDataSkew(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,map_threshold)
 	val = getattr(heuristic,map_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
 	mapskew_threshold = thresh_val(i,"HDFS_BYTES_READ")
 	mapskew_value = val(i,"HDFS_BYTES_READ")

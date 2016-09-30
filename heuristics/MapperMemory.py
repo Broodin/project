@@ -4,9 +4,9 @@ def MapperMemory(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,map_threshold)
 	val = getattr(heuristic,map_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
-	phy_threshold = phy_thres(i,"PHYSICAL_MEMORY_BYTES")
+	phy_threshold = float(thresh_val(i,"PHYSICAL_MEMORY_BYTES"))
 	phy_mem = val(i,"PHYSICAL_MEMORY_BYTES")
 	
 	ratio = phy_mem/4096
@@ -21,4 +21,4 @@ def MapperMemory(i):
 		score=ratio
 	insert(i,score,severity,"MapperMemory")
 		
-	print (severity,score,i[0],"MapperMemory")
+	print (severity,score,i[0],phy_mem,phy_threshold,"MapperMemory")

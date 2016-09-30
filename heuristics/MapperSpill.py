@@ -4,10 +4,10 @@ def MapperSpill(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,map_threshold)
 	val = getattr(heuristic,map_value)
-	insert = getattr(heuristic,insert)
+	insert= getattr(heuristic,insert_data)
 	
-	spill_threshold = thresh_val(i,"SPILLED_RECORDS")
-	mapoutput_threshold = thresh_val(i,"MAP_OUTPUT_RECORDS")
+	spill_threshold = float(thresh_val(i,"SPILLED_RECORDS"))
+	mapoutput_threshold = float(thresh_val(i,"MAP_OUTPUT_RECORDS"))
 	spill_record = val(i,"SPILLED_RECORDS")
 	mapoutput= val(i,"MAP_OUTPUT_RECORDS")
 

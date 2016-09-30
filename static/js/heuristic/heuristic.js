@@ -30,7 +30,7 @@ $(window).on('load', function() {
 				stripLines: [
 				{
 					value : null,
-					label: "Average: "
+					label: "Threshold:"
 				}
 				],
 				title:yaxis_name,
@@ -106,7 +106,7 @@ $(window).on('load', function() {
 				for( var i = 0; i < length; i++ )
 					sum += chart.options.data[0].dataPoints[i].y;
 				average = sum / length;
-				console.log(chart.options.axisY);
+				//console.log(chart.options.axisY);
 
 				chart.options.axisY.stripLines[0].value = average;
 				//chart.options.axisY.stripLines[0].label += average.toPrecision(3);

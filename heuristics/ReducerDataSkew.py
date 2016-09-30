@@ -6,9 +6,9 @@ def ReducerDataSkew(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,reduce_threshold)
 	val = getattr(heuristic,reduce_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
-	redskew_threshold = thresh_val(i,"REDUCE_SHUFFLE_BYTES")
+	redskew_threshold = float(thresh_val(i,"REDUCE_SHUFFLE_BYTES"))
 	redskew_value = val(i,"REDUCE_SHUFFLE_BYTES")
 	
 	percent = 0.02*redskew_threshold

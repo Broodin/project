@@ -29,7 +29,8 @@ $(window).on('load', function() {
 				stripLines: [
 				{
 					value : null,
-					label: "Average: "
+					label: "Threshold:",
+					labelPlacement: "inside",
 				}
 				],
 				title:"elapsed time",

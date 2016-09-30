@@ -4,10 +4,10 @@ def ReducerGC(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,reduce_threshold)
 	val = getattr(heuristic,reduce_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
-	gc_threshold = thresh_val(i,"GC_TIME_MILLIS")
-	cpu_threshold = thresh_val(i,"CPU_MILLISECONDS")
+	gc_threshold = float(thresh_val(i,"GC_TIME_MILLIS"))
+	cpu_threshold = float(thresh_val(i,"CPU_MILLISECONDS"))
 	gc_time = val(i,"GC_TIME_MILLIS")
 	cpu_time = val(i,"CPU_MILLISECONDS")
 	

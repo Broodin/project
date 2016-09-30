@@ -2,7 +2,7 @@ import sqlalchemy
 from sqlalchemy import *
 import pymysql
 engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306',echo=True) # connect to server
-#engine.execute("CREATE DATABASE dbname") #create db
+engine.execute("CREATE DATABASE dbname") #create db
 engine.execute("USE dbname") # select new db
 metadata = MetaData()
 

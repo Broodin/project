@@ -4,9 +4,9 @@ def ReducerMemory(i):
 	heuristic = heuristic_class()
 	thresh_val = getattr(heuristic,reduce_threshold)
 	val = getattr(heuristic,reduce_value)
-	insert = getattr(heuristic,insert)
+	insert = getattr(heuristic,insert_data)
 	
-	phy_threshold = thresh_val(i,"PHYSICAL_MEMORY_BYTES")
+	phy_threshold = float(thresh_val(i,"PHYSICAL_MEMORY_BYTES"))
 	phy_mem = val(i,"PHYSICAL_MEMORY_BYTES")
 		
 	ratio = phy_mem/4096

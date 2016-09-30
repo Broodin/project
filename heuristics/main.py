@@ -32,6 +32,7 @@ def main():
 	result = cur.fetchall()
 	#print(result)
 	for i in result:
+	#	print (i)
 		findHeuristics(i)
 		#print(len(i))
 		stmt = application_checked.insert().values(ID = i[0],NAME=i[1],USER=i[2],TYPE=i[3],QUEUE=i[4],START_TIME=i[5],FINISH_TIME=i[6],STATE=i[7],URL=i[8],ELAPSED_TIME=i[9])

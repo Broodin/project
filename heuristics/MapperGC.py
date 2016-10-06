@@ -1,8 +1,13 @@
+'''
+Calculates MapperGC heuristic
+checks if GC/CPU ratio is in the limits of the threshold value.
+Severity is set to low or high accordingly.
+'''
 from main import *
 
 def MapperGC(i):	
-	heuristic = heuristic_class()
-	thresh_val = getattr(heuristic,map_threshold)
+	heuristic = heuristic_class()				#instance of heuristic class to call methods 
+	thresh_val = getattr(heuristic,map_threshold)		
 	val = getattr(heuristic,map_value)
 	insert_query = getattr(heuristic,insert_data)
 	

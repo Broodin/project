@@ -1,4 +1,7 @@
-
+'''
+Calculates ReducerTime heuristic
+Checks for average time by reducers for the job.
+'''
 from main import *
 
 def ReducerTime(i):	

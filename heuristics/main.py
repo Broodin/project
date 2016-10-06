@@ -1,3 +1,7 @@
+'''
+Main class to calculate the heuristics of jobs which are in the queue
+'''
+
 from init import *
 from MapperGC import *
 from MapperDataSkew import *
@@ -11,7 +15,7 @@ from ReducerMemory import *
 from ReducerTime import *
 
 
-
+#calls heuristic methods from other python files
 def findHeuristics(i):
 	MapperGC(i)
 	MapperDataSkew(i)
@@ -24,7 +28,7 @@ def findHeuristics(i):
 	ReducerMemory(i)
 	ReducerTime(i)
 	
-
+#main method
 def main():
 	
 	stmt = application.select().where(application.c.FLAG=="NO")

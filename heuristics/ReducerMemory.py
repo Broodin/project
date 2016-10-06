@@ -1,3 +1,8 @@
+'''
+Calcualtes ReducerMemory heuristic
+checks for amount of physical memory allocated
+'''
+
 from main import *
 
 def ReducerMemory(i):	

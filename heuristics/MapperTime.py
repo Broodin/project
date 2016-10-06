@@ -1,3 +1,7 @@
+'''
+Calculates MapperTime heuristic
+checks for average mapper time of the job.
+'''
 from main import *
 from init import *
 def MapperTime(i):	

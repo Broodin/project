@@ -1,3 +1,7 @@
+'''
+Calculates MapperSpll heuristic
+Checks for ratio of SPILLED_RECORDS/MAP_OUTPUT_RECORDS
+'''
 from main import *
 
 def MapperSpill(i):	

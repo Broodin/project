@@ -1,4 +1,7 @@
-
+'''
+Calcualtes MapperSpeed heuristic
+Checks for ratio of Bytes read/ average mapper time
+'''
 from main import *
 
 def MapperSpeed(i):	

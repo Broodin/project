@@ -1,4 +1,7 @@
-
+'''
+Calcualtes ReducerDataSkew heuristic'
+checks for any skew in data of  reducer input.
+'''
 from main import *
 
 def ReducerDataSkew(i):	

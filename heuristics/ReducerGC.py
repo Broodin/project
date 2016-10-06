@@ -1,3 +1,7 @@
+'''
+Calculates ReducderGC heuristic
+Checks for GC/CPU ratio
+'''
 from main import *
 
 def ReducerGC(i):	

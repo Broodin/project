@@ -1,3 +1,7 @@
+'''
+HTTP Post methods to get data from the monitor and saves in the database. 
+'''
+
 from flask import Flask, jsonify, request
 import pymysql,json
 from flask_restful import reqparse, abort, Api, Resource
@@ -12,7 +16,7 @@ api = Api(api_rest)
 parser = reqparse.RequestParser()
 
 
-
+#parses  application data from the url
 def app_parser():
 	
 	parser.add_argument('id')
@@ -25,12 +29,13 @@ def app_parser():
 	parser.add_argument('url')
 	parser.add_argument('elapsed_time')
 
-def heuristic_parser():
+'''def heuristic_parser():
 	parser.add_argument('job_id')
 	parser.add_argument('h_name')
 	parser.add_argument('score')
 	parser.add_argument('severity')
-	
+'''
+#parses cluster data from url	
 def cluster_parser():
 	
 	parser.add_argument('q_name')
@@ -39,7 +44,7 @@ def cluster_parser():
 	parser.add_argument('time')
 	
 
-class Heuristic(Resource):
+'''class Heuristic(Resource):
 	def get(self):
 		s = heuristic.select()
 		cur = s.execute()
@@ -59,7 +64,9 @@ class Heuristic(Resource):
 		#cur.execute("INSERT INTO HEURISTIC(JOB_ID,H_NAME,SCORE,SEVERITY) VALUES (%s,%s,%s,%s)",(job_id,h_name,score,severity))
 		#conn.commit()
 		return jsonify(job_id,h_name,score,severity)
-		
+'''
+
+#Class to save application data	in database	
 class Application(Resource):
 	def get(self):
 		s = application.select()
@@ -87,7 +94,7 @@ class Application(Resource):
 		return jsonify(id,name,user,queue,start_time,finish_time,state,url,elapsed_time)
 
 
-		
+#class to save cluster data in database		
 '''class Cluster(Resource):
 	def get(self):
 		s = cluster.select()
@@ -109,6 +116,6 @@ class Application(Resource):
 '''
 		
 api.add_resource(Application, '/app/application/post')
-api.add_resource(Heuristic, '/app/heuristic/post')
+#api.add_resource(Heuristic, '/app/heuristic/post')
 #api.add_resource(Admin,'/url')
 #api.add_resource(Cluster, '/app/cluster/post')

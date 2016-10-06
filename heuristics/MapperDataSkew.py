@@ -1,4 +1,7 @@
-
+'''
+Calculates MapperDataSkew heuristic.
+Checks if there is any skew in bytes read by mappers.
+'''
 from main import *
 from heuristic import *
 def MapperDataSkew(i):

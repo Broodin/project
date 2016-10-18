@@ -1,0 +1,267 @@
+{% block navbar %}
+
+<meta hidden id="my-data" data-name="{{result1}}" data-result="{{result[0][0]}}" data-mapskew="{{rv1}}" data-mapgc="{{rv2}}" data-mapmemory="{{rv3}}" data-mapspeed="{{rv4}}" data-mapspill="{{rv5}}" data-maptime="{{rv6}}" data-reducerdataskew="{{rv7}}" data-reducergc="{{rv8}}" data-reducermemory="{{rv9}}" data-reducertime="{{rv10}}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
+<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src = "{{url_for('static',filename='js/canvasjs.min.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidemenu.css') }}">
+<script type="text/javascript" src = "{{url_for('static',filename='js/heuristic/app.js')}}"></script>	
+<script type="text/javascript" src="{{url_for('static',filename='js/heuristic/heuristic.js')}}"></script>
+
+
+  
+<div id="page-content-wrapper">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand active" href="/">Home</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/">Admin</a></li>
+				<li><a href= "#">Search</a></li>
+				<li><div class = "form">
+						<form action = "/" method = post>	
+							{{form.user(placeholder="  Enter user")}}
+							{{form.submit(value="go",class="btn btn-default btn-xs active")}}									
+						</form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+{% block content %}
+
+	<div id="wrapper" class="active">
+		<div id="sidebar-wrapper">
+			<ul id="sidebar_menu" class="sidebar-nav">
+				<li class="sidebar-brand"><a id="menu-toggle" href="#">Symantec<span id="main_icon"></span></a></li>
+			</ul>
+			<ul class="sidebar-nav" id="sidebar">     
+				<li><a>Link1<span ></span></a></li>
+				<li><a>link2<span ></span></a></li>
+			</ul>
+		</div>
+	  
+		<br><br>
+		<br>
+		<br>
+		<h1> <b>Application:</b> <i> {{result[0][1]}} <br>
+		
+		</i></h1>
+		<h3><b>Application ID:</b> {{result[0][0]}}</h3>
+		<hr>
+		
+		{%set x={'flag':False}%}
+		{%set arr =[]%}
+		{%for t in rv%}	
+			
+				{% if t[3]=="HIGH"%}
+					{%if arr.insert(0,t[1])%}
+					{%endif%}
+				{%set var=true%}
+					{%if x.update({'flag':True})%}
+					{%endif%}
+				
+				{%else%}	
+				
+				{%endif%}
+				
+		{%endfor%}
+		
+		
+		
+		{%if x.flag==False%}
+			<h4>Severity is low for this job.</h4>
+		{%else%}
+		<h4>Severity is high for {{arr|reverse|join(' , ')}}</h4>
+		{%endif%}	
+		<br>
+		
+		<br>
+		<!--	
+			{%set var ={'flag':False}%}
+			{% for t in result %}
+				{%if t[13] == "HIGH"%}
+					{%if var.update({'flag':True})%}
+
+					{%endif%}
+				{%endif%}
+			{%endfor%}
+			
+			
+		<div class = "table">
+			<h3>Application: {{result[0][1]}}</h3><br>
+		<table id="example" class="table table-striped table-bordered" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<thead style="background-color:'black';">
+				<tr>
+					<th>#</th>
+					<th>Application ID</th>
+					<th>Severity</th>
+					<th>Name</th>
+					<th>User</th>
+					<th>Type</th>
+					<th>Queue</th>
+					<th>Start Time</th>
+					<th>Finish Time</th>
+					<th>Elapsed Time</th>
+					<th>State</th>
+					<th>Tracking UI</th>
+				</tr>
+			</thead>
+				
+			<tbody>
+				
+				
+				<tr>
+					<th>1</th>
+					<td><a href="/heuristic/{{result[0][0]}}">{{result[0][0]}}</a></td>
+					<td>
+							{%if var.flag == True%}
+								<font color="red">HIGH</font>
+							{%else%}
+								<font color="green">LOW</font>	
+							{%endif%}
+					</td>
+					<td>{{result[0][1]}}</td>
+					<td>{{result[0][2]}}</td>
+					<td>{{result[0][3]}}</td>
+					<td>{{result[0][4]}}</td>
+					<td>{{result[0][5]|ctime()}}</td>
+					<td>{{result[0][6]|ctime()}}</td>
+					<td>{{result[0][9]}}</td>
+					<td>{{result[0][7]}}</td>
+					<td><a href = "{{result[0][8]}}" target="_blank">VIEW</a></td>
+				</tr>
+				
+				
+			</tbody>
+		</table>	
+			<u>*Click on Application ID to view heuristics.</u>
+		
+		
+		</div>-->
+		
+		
+		<div class="page-content inset">
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right"  id="chartContainer" style="float:left; height: 300px; width: 90%;">					
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer2" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper Data Skew",$('#my-data').data().mapskew,"hdfs bytes read","chartContainer2");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer1" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper GC",$('#my-data').data().mapgc,"GC/CPU","chartContainer1");
+					</script>
+					
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer3" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper Memory",$('#my-data').data().mapmemory,"Physical memory","chartContainer3");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer4" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper Speed",$('#my-data').data().mapspeed,"Bytes read/Time","chartContainer4");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer5" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper Spill",$('#my-data').data().mapspill,"Spilled records","chartContainer5");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer6" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Mapper Time",$('#my-data').data().maptime,"average map time","chartContainer6");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer7" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Reducer Data Skew",$('#my-data').data().reducerdataskew,"Shuffled bytes","chartContainer7");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer8" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Reducer Memory",$('#my-data').data().reducermemory,"physical memory","chartContainer8");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer9" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Reducer GC",$('#my-data').data().reducergc,"GC/CPU","chartContainer9");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div align ="right" id="chartContainer10" style="float:left; height: 300px; width: 90%;">
+					<script>heuristic("Reducer Time",$('#my-data').data().reducertime,"average reducer time","chartContainer10");
+					</script>
+					</div>              
+				</div>
+			</div>
+			<br>
+			<hr>
+		
+		
+				
+
+		
+		
+		</div>
+	</div>
+</div>	
+	  
+{% endblock %}

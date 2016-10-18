@@ -35,17 +35,10 @@ def cluster_parser():
 	parser.add_argument('time')
 	
 def task_parser():
-	parser.add_argument('task_id')
-	parser.add_argument('app_id')
-	parser.add_argument('start_time')
-	parser.add_argument('finish_time')
-	parser.add_argument('type')
+	parser.add_argument('tasks')
 	
 def taskcounter_parser():
-	parser.add_argument('task_id')
-	parser.add_argument('name')
-	parser.add_argument('value')
-	parser.add_argument('type')
+	parser.add_argument('counters')
 
 	
 class Application(Resource):
@@ -70,8 +63,8 @@ class Application(Resource):
 		url = args['url']
 		elapsed_time = args['elapsed_time']
 		flag = args['checked']
-		#stmt = application.insert()
-		#stmt.execute(ID = id, NAME = name, USER = user,QUEUE = queue,START_TIME = start_time, FINISH_TIME = finish_time, STATE = state, URL = url, ELAPSED_TIME = elapsed_time)
+		stmt = application_queue.insert()
+		stmt.execute(ID = id, NAME = name, USER = user,TYPE = type, QUEUE = queue,START_TIME = start_time, FINISH_TIME = finish_time, STATE = state, URL = url, ELAPSED_TIME = elapsed_time,FLAG = flag)
 		#cur.execute("INSERT INTO APPLICATION(ID,NAME,USER,QUEUE,START_TIME,FINISH_TIME,STATE,URL,ELAPSED_TIME) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",(id,name,user,queue,start_time,finish_time,state,url,elapsed_time))
 		#conn.commit()
 		return jsonify(id,name,user,queue,start_time,finish_time,state,url,elapsed_time)
@@ -93,8 +86,9 @@ class Cluster(Resource):
 		used_capacity = args['used_capacity']
 		max_capacity = args['max_capacity']
 		time = args['time']
-		#stmt = cluster.insert()
-		#stmt.execute(QUEUE_NAME = q_name,USED_CAPACITY = used_capacity, MAX_CAPACITY = max_capacity,DATE = time)
+		stmt = cluster.insert()
+                stmt.execute(QUEUE_NAME = q_name,MAX_CAPACITY = max_capacity, USED_CAPACITY = used_capacity,DATE = time)
+		
 		return jsonify(q_name,used_capacity,max_capacity,time)
 
 class Task(Resource):
@@ -103,12 +97,18 @@ class Task(Resource):
 	def post(self):
 		task_parser()
 		args = parser.parse_args()
-		task_id = args['task_id']
-		app_id = args['app_id']
-		start_time = args['start_time']
-		finish_time = args['finish_time']
-		type = args['type']
-		return 1
+		tasks = args['tasks']
+		tasks = json.loads(tasks)
+		print(tasks)
+		for t in tasks:
+			app_id = t.get('id')
+			task_id = t.get('task_id')
+			start_time = t.get('start_time')
+			finish_time = t.get('finish_time')
+			type = t.get('type')
+			stmt = task.insert()
+                	stmt.execute(TASK_ID = task_id, JOB_ID = app_id, START_TIME = start_time, FINISH_TIME = finish_time, TYPE = type)
+		return tasks
 
 class TaskCounter(Resource):
 	def get(self):
@@ -116,11 +116,17 @@ class TaskCounter(Resource):
 	def post(self):
 		taskcounter_parser()
 		args = parser.parse_args()
-		task_id = args['task_id']
-		name = args['name']
-		value = args['value']
-		type = args['type']
-		return 1
+		counters = args['counters']
+		counters = json.loads(counters)
+		for counter in counters:
+			task_id = counter.get('task_id')
+			name = counter.get('name')
+			value = counter.get('value')
+			type = counter.get('type')
+			engine.execute("USE symantec")
+			stmt = taskcounter.insert()
+                	stmt.execute(TASK_ID = task_id, NAME = name, VALUE = value, TYPE = type)
+		return counters
 		
 api.add_resource(Application, '/app/application/post')
 api.add_resource(Cluster, '/app/cluster/post')
